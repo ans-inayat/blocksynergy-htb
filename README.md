@@ -27,6 +27,12 @@ nmap -p22,8080 -sC -sV -O -oA complete-scan.txt blocksynergy.htb
 2. Continue manual enumeration of discovered services (web, SSH, etc.) based on the scan results.
 
 3. If there is an available exploit that requires a particular profile/rank or configuration, run it. If the exploit requires a specific account/profile and you don't have it, continue intended/manual enumeration to obtain the required access.
+```bash
+git clone https://github.com/ans-inayat/blocksynergy-htb
+```
+```bash
+cd blocksynergy-htb
+```
 
 4. To run the bundled exploit script and read the flags:
 
